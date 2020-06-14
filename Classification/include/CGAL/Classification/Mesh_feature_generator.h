@@ -166,7 +166,7 @@ private:
     {
       CGAL::Real_timer t;
       t.start();
-      neighborhood = std::unique_ptr<Neighborhood>(new Neighborhood (input));
+      neighborhood = std::make_unique<Neighborhood>(input);
       t.stop();
 
       CGAL_CLASSIFICATION_CERR << "Neighborhood computed in " << t.time() << " second(s)" << std::endl;
@@ -174,10 +174,9 @@ private:
       t.reset();
       t.start();
 
-      eigen = std::unique_ptr<Local_eigen_analysis> (new Local_eigen_analysis
-        (Local_eigen_analysis::create_from_face_graph
+      eigen = std::make_unique<Local_eigen_analysis> (Local_eigen_analysis::create_from_face_graph
          (input, neighborhood->n_ring_neighbor_query(nb_scale + 1),
-          ConcurrencyTag(), DiagonalizeTraits())));
+          ConcurrencyTag(), DiagonalizeTraits()));
       float mrange = eigen->mean_range();
       if (this->voxel_size < 0)
         this->voxel_size = mrange;
@@ -188,22 +187,14 @@ private:
       t.start();
 
       if (lower_grid == nullptr)
-        grid = std::unique_ptr<Planimetric_grid> (new Planimetric_grid (range, point_map, bbox, this->voxel_size));
+        grid = std::make_unique<Planimetric_grid> (range, point_map, bbox, this->voxel_size);
       else
-        grid = std::unique_ptr<Planimetric_grid> (new Planimetric_grid(lower_grid));
+        grid = std::make_unique<Planimetric_grid> (lower_grid);
       t.stop();
       CGAL_CLASSIFICATION_CERR << "Planimetric grid computed in " << t.time() << " second(s)" << std::endl;
       t.reset();
     }
-    ~Scale()
-    {
 
-    }
-
-    void reduce_memory_footprint(bool delete_neighborhood)
-    {
-
-    }
 
     float grid_resolution() const { return voxel_size; }
     float radius_neighbors() const { return voxel_size * 3; }
@@ -257,7 +248,7 @@ public:
 
     m_scales.reserve (nb_scales);
 
-    m_scales.push_back (std::unique_ptr<Scale>( new Scale (m_input, m_range, m_point_map, m_bbox, voxel_size, 0)));
+    m_scales.push_back (std::make_unique<Scale>(m_input, m_range, m_point_map, m_bbox, voxel_size, 0));
 
     if (voxel_size == -1.f)
       voxel_size = m_scales[0]->grid_resolution();
@@ -265,7 +256,7 @@ public:
     for (std::size_t i = 1; i < nb_scales; ++ i)
     {
       voxel_size *= 2;
-      m_scales.push_back (std::unique_ptr<Scale>( new Scale (m_input, m_range, m_point_map, m_bbox, voxel_size, i, m_scales[i-1]->grid)));
+      m_scales.push_back (std::make_unique<Scale>(m_input, m_range, m_point_map, m_bbox, voxel_size, i, m_scales[i-1]->grid));
     }
     t.stop();
     CGAL_CLASSIFICATION_CERR << "Scales computed in " << t.time() << " second(s)" << std::endl;
@@ -275,15 +266,8 @@ public:
   /// @}
 
   /// \cond SKIP_IN_MANUAL
-  virtual ~Mesh_feature_generator()
-  {
 
-  }
 
-  void reduce_memory_footprint()
-  {
-
-  }
   /// \endcond
 
 

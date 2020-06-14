@@ -165,9 +165,9 @@ private:
       CGAL::Real_timer t;
       t.start();
       if (lower_grid == nullptr)
-        neighborhood = std::unique_ptr<Neighborhood>( new Neighborhood (input, point_map));
+        neighborhood = std::make_unique<Neighborhood>(input, point_map);
       else
-        neighborhood = std::unique_ptr<Neighborhood>( new Neighborhood (input, point_map, voxel_size));
+        neighborhood = std::make_unique<Neighborhood>(input, point_map, voxel_size);
       t.stop();
 
       if (lower_grid == nullptr)
@@ -178,9 +178,8 @@ private:
       t.reset();
       t.start();
 
-      eigen = std::unique_ptr<Local_eigen_analysis>( new Local_eigen_analysis
-        (Local_eigen_analysis::create_from_point_set
-         (input, point_map, neighborhood->k_neighbor_query(12), ConcurrencyTag(), DiagonalizeTraits())));
+      eigen = std::make_unique<Local_eigen_analysis>(Local_eigen_analysis::create_from_point_set
+         (input, point_map, neighborhood->k_neighbor_query(12), ConcurrencyTag(), DiagonalizeTraits()));
 
       float range = eigen->mean_range();
       if (this->voxel_size < 0)
@@ -192,9 +191,9 @@ private:
       t.start();
 
       if (lower_grid == nullptr)
-        grid = std::unique_ptr<Planimetric_grid>( new Planimetric_grid (input, point_map, bbox, this->voxel_size));
+        grid = std::make_unique<Planimetric_grid>(input, point_map, bbox, this->voxel_size);
       else
-        grid = std::unique_ptr<Planimetric_grid>( new Planimetric_grid(lower_grid));
+        grid = std::make_unique<Planimetric_grid>(lower_grid);
       t.stop();
       CGAL_CLASSIFICATION_CERR << "Planimetric grid computed in " << t.time() << " second(s)" << std::endl;
       t.reset();
@@ -252,7 +251,7 @@ public:
 
     m_scales.reserve (nb_scales);
 
-    m_scales.push_back (std::unique_ptr<Scale>( new Scale (m_input, m_point_map, m_bbox, voxel_size)));
+    m_scales.push_back (std::make_unique<Scale>(m_input, m_point_map, m_bbox, voxel_size));
 
     if (voxel_size == -1.f)
       voxel_size = m_scales[0]->grid_resolution();
@@ -260,7 +259,7 @@ public:
     for (std::size_t i = 1; i < nb_scales; ++ i)
     {
       voxel_size *= 2;
-      m_scales.push_back (std::unique_ptr<Scale>( new Scale (m_input, m_point_map, m_bbox, voxel_size, m_scales[i-1]->grid)));
+      m_scales.push_back (std::make_unique<Scale>(m_input, m_point_map, m_bbox, voxel_size, m_scales[i-1]->grid));
     }
     t.stop();
     CGAL_CLASSIFICATION_CERR << "Scales computed in " << t.time() << " second(s)" << std::endl;
@@ -270,10 +269,7 @@ public:
   /// @}
 
   /// \cond SKIP_IN_MANUAL
-  virtual ~Point_set_feature_generator()
-  {
-    clear();
-  }
+
 
   /// \endcond
 
@@ -435,11 +431,6 @@ public:
 
 
 private:
-
-  void clear()
-  {
-
-  }
 
 #ifdef CGAL_CLASSIFICATION_USE_GRADIENT_OF_FEATURE
   void generate_gradient_features(Feature_set& features)
