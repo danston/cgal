@@ -265,11 +265,6 @@ public:
 
   /// @}
 
-  /// \cond SKIP_IN_MANUAL
-
-
-  /// \endcond
-
 
   /// \name Feature Generation
   /// @{

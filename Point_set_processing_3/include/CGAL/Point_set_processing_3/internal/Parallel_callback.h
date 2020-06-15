@@ -17,6 +17,9 @@
 #include <functional>
 
 #include <memory>
+#include <atomic>
+#include <thread>
+#include <chrono>
 
 #include <CGAL/thread.h>
 
@@ -27,11 +30,11 @@ namespace internal {
 class Parallel_callback
 {
   const std::function<bool(double)>& m_callback;
-  std::shared_ptr<cpp11::atomic<std::size_t> > m_advancement;
-  std::shared_ptr<cpp11::atomic<bool> > m_interrupted;
+  std::shared_ptr<std::atomic<std::size_t> > m_advancement;
+  std::shared_ptr<std::atomic<bool> > m_interrupted;
   std::size_t m_size;
   bool m_creator;
-  std::unique_ptr<cpp11::thread> m_thread;
+  std::unique_ptr<std::thread> m_thread;
 
   // assignment operator shouldn't be used (m_callback is const ref)
   Parallel_callback& operator= (const Parallel_callback&)
@@ -45,17 +48,15 @@ public:
                      std::size_t advancement = 0,
                      bool interrupted = false)
     : m_callback (callback)
-    , m_advancement (new cpp11::atomic<std::size_t>())
-    , m_interrupted (new cpp11::atomic<bool>())
+    , m_advancement (new std::atomic<std::size_t>())
+    , m_interrupted (new std::atomic<bool>())
     , m_size (size)
     , m_creator (true)
-    , m_thread (nullptr)
   {
-    // cpp11::atomic only has default constructor, initialization done in two steps
     *m_advancement = advancement;
     *m_interrupted = interrupted;
     if (m_callback)
-      m_thread = std::unique_ptr<cpp11::thread>( new cpp11::thread (*this));
+      m_thread = std::make_unique<std::thread>(*this);
   }
 
   Parallel_callback (const Parallel_callback& other)
@@ -64,19 +65,14 @@ public:
     , m_interrupted (other.m_interrupted)
     , m_size (other.m_size)
     , m_creator (false)
-    , m_thread (nullptr)
+
   {
 
   }
 
 
-  ~Parallel_callback ()
-  {
-
-  }
-
-  cpp11::atomic<std::size_t>& advancement() { return *m_advancement; }
-  cpp11::atomic<bool>& interrupted() { return *m_interrupted; }
+  std::atomic<std::size_t>& advancement() { return *m_advancement; }
+  std::atomic<bool>& interrupted() { return *m_interrupted; }
   void join()
   {
     if (m_thread != nullptr)
@@ -91,7 +87,7 @@ public:
         *m_interrupted = true;
       if (*m_interrupted)
         return;
-      cpp11::sleep_for (0.00001);
+      std::this_thread_sleep_for (std::chrono::microseconds(10));
     }
     m_callback (1.);
   }
