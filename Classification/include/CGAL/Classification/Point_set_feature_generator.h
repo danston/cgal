@@ -193,7 +193,7 @@ private:
       if (lower_grid == nullptr)
         grid = std::make_unique<Planimetric_grid>(input, point_map, bbox, this->voxel_size);
       else
-        grid = std::make_unique<Planimetric_grid>(lower_grid);
+        grid.reset(lower_grid);
       t.stop();
       CGAL_CLASSIFICATION_CERR << "Planimetric grid computed in " << t.time() << " second(s)" << std::endl;
       t.reset();
