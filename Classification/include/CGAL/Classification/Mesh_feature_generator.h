@@ -161,7 +161,7 @@ private:
            PointMap point_map,
            const Iso_cuboid_3& bbox, float voxel_size,
            std::size_t nb_scale,
-           std::unique_ptr<Planimetric_grid> &lower_grid = nullptr)
+           std::unique_ptr<Planimetric_grid> const &lower_grid = nullptr)
       : voxel_size (voxel_size)
     {
       CGAL::Real_timer t;
