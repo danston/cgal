@@ -161,7 +161,7 @@ private:
            PointMap point_map,
            const Iso_cuboid_3& bbox, float voxel_size,
            std::size_t nb_scale,
-           std::unique_ptr<Planimetric_grid> const &lower_grid = nullptr)
+           Planimetric_grid* lower_grid = nullptr)
       : voxel_size (voxel_size)
     {
       CGAL::Real_timer t;
@@ -256,7 +256,7 @@ public:
     for (std::size_t i = 1; i < nb_scales; ++ i)
     {
       voxel_size *= 2;
-      m_scales.push_back (std::make_unique<Scale>(m_input, m_range, m_point_map, m_bbox, voxel_size, i, m_scales[i-1]->grid));
+      m_scales.push_back (std::make_unique<Scale>(m_input, m_range, m_point_map, m_bbox, voxel_size, i, (m_scales[i-1]->grid).get()));
     }
     t.stop();
     CGAL_CLASSIFICATION_CERR << "Scales computed in " << t.time() << " second(s)" << std::endl;

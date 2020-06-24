@@ -87,7 +87,7 @@ public:
         *m_interrupted = true;
       if (*m_interrupted)
         return;
-      std::this_thread_sleep_for (std::chrono::microseconds(10));
+      std::this_thread::sleep_for (std::chrono::microseconds(10));
     }
     m_callback (1.);
   }
