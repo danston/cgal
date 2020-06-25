@@ -1,5 +1,6 @@
 namespace CGAL {
 
+ // random comment
 /*!
   \ingroup PkgPolyhedronRef
 
