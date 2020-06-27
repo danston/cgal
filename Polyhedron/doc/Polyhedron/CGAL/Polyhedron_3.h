@@ -1096,6 +1096,8 @@ public:
   */
   Vertex_iterator vertices_end();
 
+  unspecified_type vertex_handles();
+
   /*!
     iterator over all
     halfedges.
@@ -1107,6 +1109,8 @@ public:
   */
   Halfedge_iterator halfedges_end();
 
+  unspecified_type halfedge_handles();
+
   /*!
     iterator over all facets
     (excluding holes).
@@ -1117,6 +1121,8 @@ public:
     past-the-end iterator.
   */
   Facet_iterator facets_end();
+
+    unspecified_type facet_handles();
 
   /*!
     iterator over all edges.
