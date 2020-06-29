@@ -1097,7 +1097,7 @@ public:
   Vertex_iterator vertices_end();
 
   /*!
-    returns a range over handles of the verticess .
+    returns a range over handles of the vertices.
   */
   unspecified_type vertex_handles();
 
@@ -1113,7 +1113,7 @@ public:
   Halfedge_iterator halfedges_end();
 
   /*!
-    returns a range over handles of the halfedges .
+    returns a range over handles of the halfedges.
   */
   unspecified_type halfedge_handles();
 
