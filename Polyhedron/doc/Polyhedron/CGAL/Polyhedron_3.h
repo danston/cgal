@@ -1096,6 +1096,9 @@ public:
   */
   Vertex_iterator vertices_end();
 
+  /*!
+    returns a range over handles of the verticess .
+  */
   unspecified_type vertex_handles();
 
   /*!
@@ -1109,6 +1112,9 @@ public:
   */
   Halfedge_iterator halfedges_end();
 
+  /*!
+    returns a range over handles of the halfedges .
+  */
   unspecified_type halfedge_handles();
 
   /*!
@@ -1122,7 +1128,10 @@ public:
   */
   Facet_iterator facets_end();
 
-    unspecified_type facet_handles();
+  /*!
+    returns a range over handles of the facets.
+  */
+  unspecified_type facet_handles();
 
   /*!
     iterator over all edges.

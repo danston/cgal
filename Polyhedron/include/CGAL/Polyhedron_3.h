@@ -858,14 +858,14 @@ public:
     Halfedge_const_iterator halfedges_end() const {
         return hds_.halfedges_end();
     }
-    Iterator_range<Prevent_deref<Halfedge_const_iterator> > halfedge_handles() const  {
-    return make_prevent_deref_range(halfedges_begin(), halfedges_end());
+    Iterator_range<Prevent_deref<Halfedge_const_iterator> >  halfedge_handles() const  {
+        return make_prevent_deref_range(halfedges_begin(), halfedges_end());
     }
 
     Facet_const_iterator facets_begin() const { return hds_.faces_begin();}
     Facet_const_iterator facets_end()   const { return hds_.faces_end();}
-    Iterator_range<Prevent_deref<Facet_const_iterator> > face_handles() const  {
-    return make_prevent_deref_range(facets_begin(), facets_end());
+    Iterator_range<Prevent_deref<Facet_const_iterator> >  face_handles() const  {
+        return make_prevent_deref_range(facets_begin(), facets_end());
     }
 
     // Auxiliary iterators for convinience

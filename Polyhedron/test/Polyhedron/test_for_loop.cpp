@@ -1,15 +1,8 @@
 
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/Polyhedron_3.h>
-#include <CGAL/HalfedgeDS_vector.h>
-#include <CGAL/HalfedgeDS_list.h>
-#include <CGAL/Polyhedron_incremental_builder_3.h>
-#include <CGAL/Polyhedron_min_items_3.h>
 #include <CGAL/Polyhedron_traits_3.h>
-#include <CGAL/Polyhedron_traits_with_normals_3.h>
 #include <CGAL/Iterator_project.h>
-#include <CGAL/function_objects.h>
-#include <CGAL/halfedgeds_connected_components.h>
 
 #include <cassert>
 
@@ -17,11 +10,9 @@
 void test_for_loop(){
 
     typedef CGAL::Simple_cartesian<double>                     Kernel;
-    typedef CGAL::Simple_cartesian<int>                        KernelI;
     typedef CGAL::Point_3<Kernel>                       Point;
     typedef CGAL::Plane_3<Kernel>                       Plane;
     typedef CGAL::Polyhedron_traits_3<Kernel>           Traits;
-
 
     typedef CGAL::Polyhedron_3<Traits>                  Polyhedron;
 
@@ -81,6 +72,5 @@ void test_for_loop(){
 
 int main() {
     test_for_loop();
-    //test_min_Polyhedron();
     return 0;
 }
