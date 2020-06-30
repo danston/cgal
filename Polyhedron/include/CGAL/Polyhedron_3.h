@@ -827,7 +827,7 @@ public:
 
     Halfedge_iterator halfedges_end() { return hds_.halfedges_end();}
 
-    Iterator_range<Prevent_deref<Halfedge_iterator> >   halfedge_handles()  {
+    Iterator_range<Prevent_deref<Halfedge_iterator> >   halfedge_handles() {
         return make_prevent_deref_range(halfedges_begin(), halfedges_end());
     }
 
@@ -836,7 +836,7 @@ public:
 
     Facet_iterator facets_end() { return hds_.faces_end();}
 
-    Iterator_range<Prevent_deref<Facet_iterator> >   facet_handles()   {
+    Iterator_range<Prevent_deref<Facet_iterator> >   facet_handles() {
         return make_prevent_deref_range(facets_begin(), facets_end());
     }
 
@@ -848,7 +848,7 @@ public:
     Vertex_const_iterator vertices_end() const {
         return hds_.vertices_end();
     }
-    Iterator_range<Prevent_deref<Vertex_const_iterator> >   vertex_handles() const  {
+    Iterator_range<Prevent_deref<Vertex_const_iterator> >   vertex_handles() const {
         return make_prevent_deref_range(vertices_begin(), vertices_end());
     }
 
@@ -858,13 +858,13 @@ public:
     Halfedge_const_iterator halfedges_end() const {
         return hds_.halfedges_end();
     }
-    Iterator_range<Prevent_deref<Halfedge_const_iterator> >  halfedge_handles() const  {
+    Iterator_range<Prevent_deref<Halfedge_const_iterator> >  halfedge_handles() const {
         return make_prevent_deref_range(halfedges_begin(), halfedges_end());
     }
 
     Facet_const_iterator facets_begin() const { return hds_.faces_begin();}
     Facet_const_iterator facets_end()   const { return hds_.faces_end();}
-    Iterator_range<Prevent_deref<Facet_const_iterator> >  face_handles() const  {
+    Iterator_range<Prevent_deref<Facet_const_iterator> >  face_handles() const {
         return make_prevent_deref_range(facets_begin(), facets_end());
     }
 
